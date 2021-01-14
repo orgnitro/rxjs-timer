@@ -13,6 +13,6 @@ export default function ResetBtn(props) {
 }
 
   return (
-    <button style={style} onClick={props.handler}>Stop</button>
+    <button style={style} onClick={props.handler}>Reset</button>
   )
 }
