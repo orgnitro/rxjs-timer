@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default function PauseBtn(props) {
+export default function WaitBtn(props) {
   const style={
     backgroundColor: '#fedc81',
     borderRadius: '2px',
@@ -11,6 +11,7 @@ export default function PauseBtn(props) {
     margin: '10px',
     padding: '0',
 }
+
   return (
     <button style={style} onClick={props.handler}>Wait</button>
   )

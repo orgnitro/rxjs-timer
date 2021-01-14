@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TimerScreen from './TimerScreen'
 import StartBtn from './StartBtn'
-import PauseBtn from './PauseBtn'
+import WaitBtn from './WaitBtn'
 import StopBtn from './StopBtn'
 import { interval, NEVER, Subject } from 'rxjs'
 import { switchMap, scan, startWith, tap } from 'rxjs/operators'
@@ -16,19 +16,19 @@ export default class Timer extends Component {
         minutes: '00',
         hours: '00',
       },
-      startIsClicked: false,
+      waitBtnClicked: false,
       counterVal: 0,
       isRunning: false
     }
     this.subject = new Subject();
 
     this.setTime = this.setTime.bind(this);
-    this.startTimer = this.startTimer.bind(this);
-    this.pauseTimer = this.pauseTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
+    this.startHandler = this.startHandler.bind(this);
+    this.waitHandler = this.waitHandler.bind(this);
+    this.stopHandler = this.stopHandler.bind(this);
   }
 
-    startTimer() {
+    startHandler() {
       if (this.state.isRunning) {
         this.subject.next({ counterVal: 0, isRunning: true });
       } else {
@@ -37,19 +37,19 @@ export default class Timer extends Component {
       }
     }
 
-    pauseTimer() {
-      if (this.state.startIsClicked) {
+    waitHandler() {
+      if (this.state.waitBtnClicked) {
         this.subject.next({isRunning: false});
         this.setState({isRunning: false});
       } else{
-        this.setState({startIsClicked: true});
+        this.setState({waitBtnClicked: true});
         setTimeout(() => {
-          this.setState({startIsClicked: false});
+          this.setState({waitBtnClicked: false});
         }, 300);
       }
     }
 
-    stopTimer() {
+    stopHandler() {
       this.subject.next({counterVal: 0, isRunning: false});
       this.setState({isRunning: false});
     }
@@ -96,12 +96,13 @@ export default class Timer extends Component {
       margin: 'auto',
       padding: '20px 5px'
     }
+    
     return (
       <div style={appStyle}>
       <TimerScreen hours={hours} minutes={minutes} seconds={seconds} />
-      <StartBtn handler={this.startTimer} />
-      <PauseBtn handler={this.pauseTimer} />
-      <StopBtn handler={this.stopTimer} />
+      <StartBtn handler={this.startHandler} />
+      <WaitBtn handler={this.waitHandler} />
+      <StopBtn handler={this.stopHandler} />
       </div>
     )
   }

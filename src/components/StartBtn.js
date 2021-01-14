@@ -11,6 +11,7 @@ export default function StartBtn(props) {
       margin: '10px',
       padding: '0',
   }
+  
   return (
     <button style={style} onClick={props.handler}>Start</button>
   )

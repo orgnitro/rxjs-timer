@@ -11,8 +11,8 @@ export default function StopBtn(props) {
     margin: '10px',
     padding: '0'
 }
+
   return (
     <button style={style} onClick={props.handler}>Stop</button>
-
   )
 }
