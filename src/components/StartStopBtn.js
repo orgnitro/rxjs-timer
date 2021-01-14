@@ -13,6 +13,6 @@ export default function StartBtn(props) {
   }
   
   return (
-    <button style={style} onClick={props.handler}>Start</button>
+    <button style={style} onClick={props.handler}>Start/Stop</button>
   )
 }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import TimerScreen from './TimerScreen'
-import StartBtn from './StartBtn'
+import StartStopBtn from './StartStopBtn'
 import WaitBtn from './WaitBtn'
-import StopBtn from './StopBtn'
+import ResetBtn from './ResetBtn'
+
 import { interval, NEVER, Subject } from 'rxjs'
 import { switchMap, scan, startWith, tap } from 'rxjs/operators'
 
@@ -25,14 +26,15 @@ export default class Timer extends Component {
     this.setTime = this.setTime.bind(this);
     this.startHandler = this.startHandler.bind(this);
     this.waitHandler = this.waitHandler.bind(this);
-    this.stopHandler = this.stopHandler.bind(this);
+    this.resetHandler = this.resetHandler.bind(this);
   }
 
     startHandler() {
       if (this.state.isRunning) {
-        this.subject.next({ counterVal: 0, isRunning: true });
+        this.subject.next({counterVal: 0, isRunning: false});
+        this.setState({isRunning: false, counterVal: 0});
       } else {
-        this.subject.next({ isRunning: true });
+        this.subject.next({isRunning: true});
         this.setState({isRunning: true});
       }
     }
@@ -49,27 +51,28 @@ export default class Timer extends Component {
       }
     }
 
-    stopHandler() {
-      this.subject.next({counterVal: 0, isRunning: false});
-      this.setState({isRunning: false});
+    resetHandler() {
+      this.subject.next({counterVal: 0});
+      this.setState({counterVal: 0});
     }
 
     setTime(val) {
-      this.hourInt = Math.floor(val / (60*60));
-      this.minInt = Math.floor(val / 60);
-      this.secInt = val % 60;
+      const hourInt = Math.floor(val / (60*60));
+      const minInt = Math.floor(val / 60);
+      const secInt = val % 60;
+
       this.setState({
         time: {
-          hours: (this.hourInt < 10) ? `0${this.hourInt}` : this.hourInt,
-          minutes: (this.minInt < 10) ? `0${this.minInt}` : this.minInt,
-          seconds: (this.secInt < 10) ? `0${this.secInt}` : this.secInt
+          hours: (hourInt < 10) ? `0${hourInt}` : hourInt,
+          minutes: (minInt < 10) ? `0${minInt}` : minInt,
+          seconds: (secInt < 10) ? `0${secInt}` : secInt
         }
       });
     }
 
     componentDidMount() {
       this.subject.pipe(
-        startWith({isRunning: false, counterVal: 0}),
+        startWith({counterVal: 0, isRunning: false}),
         scan( (acc, val) => ({ ...acc, ...val })),
         tap( current => {
           this.setTime(current.counterVal);
@@ -100,9 +103,9 @@ export default class Timer extends Component {
     return (
       <div style={appStyle}>
       <TimerScreen hours={hours} minutes={minutes} seconds={seconds} />
-      <StartBtn handler={this.startHandler} />
+      <StartStopBtn handler={this.startHandler} />
       <WaitBtn handler={this.waitHandler} />
-      <StopBtn handler={this.stopHandler} />
+      <ResetBtn handler={this.resetHandler} />
       </div>
     )
   }

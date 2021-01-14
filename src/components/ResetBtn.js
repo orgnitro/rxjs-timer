@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default function StopBtn(props) {
+export default function ResetBtn(props) {
   const style={
     backgroundColor: '#e84258',
     borderRadius: '2px',
