@@ -1,18 +1,8 @@
 import React from 'react'
 
 
-export default function ResetBtn(props) {
-  const style={
-    backgroundColor: '#e84258',
-    borderRadius: '2px',
-    border: 'none',
-    width: '20%',
-    height: '30px',
-    margin: '10px',
-    padding: '0'
-}
-
+export default function ResetBtn({ handler }) {
   return (
-    <button style={style} onClick={props.handler}>Reset</button>
+    <button className="reset-btn" onClick={handler}>Reset</button>
   )
 }
