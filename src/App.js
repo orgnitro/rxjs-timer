@@ -12,7 +12,6 @@ import appReducer from './components/appReducer'
 
 const initialState = {
   time: {sec: '00', min: '00', hours: '00'},
-  counterVal: 0,
   isRunning: false,
   waitBtnClicked: false
 }

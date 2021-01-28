@@ -23,7 +23,6 @@ const appReducer = (state, action) => {
         return {
           ...state, 
           isRunning: false,
-          counterVal: 0
         }
       } else {
         timerSource.next({timerIsRunning: true});
@@ -45,7 +44,7 @@ const appReducer = (state, action) => {
       return {...state, waitBtnClicked: false}
     case "RESET_HANDLER": {
       timerSource.next({value: 0});
-      return {...state, counterVal: 0}
+      return state
     }
     default: 
       return state;
