@@ -16,9 +16,8 @@ const initialState = {
   waitBtnClicked: false
 }
 
-// export const timerSource = new Subject();
-  export let subscriber;
-  export const timerSource = new Observable(_subscriber => subscriber = _subscriber);
+export let subscriber;
+export const timerSource = new Observable(_subscriber => subscriber = _subscriber);
 
 const App = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
