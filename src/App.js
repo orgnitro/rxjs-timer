@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, } from 'react'
-import { Subject, interval, NEVER } from 'rxjs'
+import { Observable, interval, NEVER } from 'rxjs'
 import { switchMap, scan, startWith, tap } from 'rxjs/operators'
 import './App.css'
 
@@ -16,7 +16,9 @@ const initialState = {
   waitBtnClicked: false
 }
 
-export const timerSource = new Subject();
+// export const timerSource = new Subject();
+  export let subscriber;
+  export const timerSource = new Observable(_subscriber => subscriber = _subscriber);
 
 const App = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
