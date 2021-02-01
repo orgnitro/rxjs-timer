@@ -1,4 +1,4 @@
-import { timerSource } from '../App'
+import { subscriber } from '../App'
  
 
 const appReducer = (state, action) => {
@@ -19,19 +19,19 @@ const appReducer = (state, action) => {
     }
     case "START/STOP_HANDLER": {
       if (state.isRunning) {
-        timerSource.next({value: 0, timerIsRunning: false});
+        subscriber.next({value: 0, timerIsRunning: false});
         return {
           ...state, 
           isRunning: false,
         }
       } else {
-        timerSource.next({timerIsRunning: true});
+        subscriber.next({timerIsRunning: true});
         return {...state, isRunning: true}
       }
     }
     case "WAIT_HANDLER": {
       if (state.waitBtnClicked) {
-        timerSource.next({timerIsRunning: false});
+        subscriber.next({timerIsRunning: false});
         return {...state, isRunning: false}
       } else {
         setTimeout( () => {
@@ -43,7 +43,7 @@ const appReducer = (state, action) => {
     case "WAIT_HANDLER_NOT_DBCLICKED":
       return {...state, waitBtnClicked: false}
     case "RESET_HANDLER": {
-      timerSource.next({value: 0});
+      subscriber.next({value: 0});
       return state
     }
     default: 
